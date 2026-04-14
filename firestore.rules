@@ -1,0 +1,51 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    // Collection: responses
+    // Document ID: auto-generated
+    // Fields:
+    //   - timestamp: string (ISO 8601)
+    //   - name: string
+    //   - fear_meter: string
+    //   [... other survey fields ...]
+    // ===============================================================
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && 
+        (request.auth.token.email == "princeab9685@gmail.com" && request.auth.token.email_verified == true);
+    }
+
+    function isNotGibberish(str) {
+      // Basic check: must contain at least one vowel and no long consonant clusters
+      return str.matches(".*[aeiouyAEIOUY].*") && 
+             !str.matches(".*[bcdfghjklmnpqrstvwxzBCDFGHJKLMNPQRSTVWXZ]{6,}.*");
+    }
+
+    function isValidResponse(data) {
+      let requiredFields = [
+        'timestamp', 'name', 'age_group', 'gender', 'role', 'social_type', 
+        'fear_types', 'fear_age', 'childhood_fear', 'physical_reactions', 
+        'missed_opportunity', 'fear_meter', 'fear_profile', 'scenario_speech', 
+        'scenario_competition', 'overcome_fear', 'confession', 'agree_statement'
+      ];
+      return data.keys().hasAll(requiredFields) &&
+             data.name is string && data.name.size() >= 2 && data.name.size() < 100 && isNotGibberish(data.name) &&
+             data.confession is string && data.confession.size() >= 10 && data.confession.size() < 5000 && isNotGibberish(data.confession) &&
+             data.timestamp is string &&
+             data.fear_meter is string;
+    }
+
+    match /responses/{responseId} {
+      allow create: if isValidResponse(request.resource.data);
+      allow read, delete: if isAdmin();
+      allow update: if false; // Responses are immutable
+    }
+  }
+}

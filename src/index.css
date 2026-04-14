@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@theme {
+  --font-orbitron: "Orbitron", ui-monospace, SFMono-Regular, monospace;
+  --font-rajdhani: "Rajdhani", ui-sans-serif, system-ui, sans-serif;
+  --font-playfair: "Playfair Display", serif;
+}
+
+:root {
+  --bg: #020408;
+  --surface: #060d16;
+  --glass: rgba(0,200,255,0.04);
+  --border: rgba(0,200,255,0.15);
+  --border-bright: rgba(0,200,255,0.5);
+  --cyan: #00c8ff;
+  --cyan-dim: rgba(0,200,255,0.6);
+  --gold: #ffd700;
+  --red: #ff3355;
+  --green: #00ff88;
+  --text: #c8e8ff;
+  --text-dim: rgba(200,232,255,0.45);
+  --text-bright: #ffffff;
+  --glow: 0 0 20px rgba(0,200,255,0.3);
+  --glow-strong: 0 0 40px rgba(0,200,255,0.5);
+}
+
+@layer base {
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* SCAN LINE EFFECT */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+    pointer-events: none;
+    z-index: 9999;
+  }
+}
+
+/* Custom animations and utility classes from the original template */
+@keyframes ringPulse {
+  0%,100% { transform: translate(-50%,-55%) scale(1); opacity: 0.6; }
+  50% { transform: translate(-50%,-55%) scale(1.05); opacity: 1; }
+}
+
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+@keyframes segPulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+@keyframes secIn {
+  from { opacity: 0; transform: translateY(30px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes rotate { to { transform: rotate(360deg); } }
+
+@keyframes ldPulse { 0%,80%,100%{transform:scale(0.6);opacity:0.3} 40%{transform:scale(1);opacity:1} }

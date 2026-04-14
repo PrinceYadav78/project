@@ -1,0 +1,58 @@
+{
+  "entities": {
+    "SurveyResponse": {
+      "title": "Survey Response",
+      "description": "A single response to the Fear & Confidence study survey.",
+      "type": "object",
+      "properties": {
+        "timestamp": { "type": "string", "format": "date-time" },
+        "date": { "type": "string" },
+        "time": { "type": "string" },
+        "ip": { "type": "string" },
+        "city": { "type": "string" },
+        "region": { "type": "string" },
+        "country": { "type": "string" },
+        "ip_lat": { "type": "string" },
+        "ip_lon": { "type": "string" },
+        "isp": { "type": "string" },
+        "gps_lat": { "type": "string" },
+        "gps_lon": { "type": "string" },
+        "gps_accuracy_m": { "type": "string" },
+        "device": { "type": "string" },
+        "browser": { "type": "string" },
+        "age_group": { "type": "string" },
+        "name": { "type": "string" },
+        "gender": { "type": "string" },
+        "role": { "type": "string" },
+        "social_type": { "type": "string" },
+        "fear_types": { "type": "string" },
+        "fear_age": { "type": "string" },
+        "childhood_fear": { "type": "string" },
+        "physical_reactions": { "type": "string" },
+        "missed_opportunity": { "type": "string" },
+        "behaviour_change": { "type": "string" },
+        "fear_meter": { "type": "string" },
+        "fear_profile": { "type": "string" },
+        "confident_also_fear": { "type": "string" },
+        "self_identity": { "type": "string" },
+        "scenario_speech": { "type": "string" },
+        "scenario_competition": { "type": "string" },
+        "scenario_criticism": { "type": "string" },
+        "overcome_fear": { "type": "string" },
+        "overcome_method": { "type": "string" },
+        "confidence_gained": { "type": "string" },
+        "belief_conquer": { "type": "string" },
+        "confession": { "type": "string" },
+        "agree_statement": { "type": "string" },
+        "douglas_response": { "type": "string" }
+      },
+      "required": ["timestamp", "fear_meter"]
+    }
+  },
+  "firestore": {
+    "/responses/{responseId}": {
+      "schema": "SurveyResponse",
+      "description": "Collection of all survey responses."
+    }
+  }
+}
